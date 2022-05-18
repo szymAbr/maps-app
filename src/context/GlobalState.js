@@ -38,6 +38,13 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
+  function setAddressFinish(address) {
+    dispatch({
+      type: "SET_ADDRESS_FINISH",
+      payload: address,
+    });
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -46,6 +53,7 @@ export const GlobalProvider = ({ children }) => {
         coordinatesStart: state.coordinatesStart,
         coordinatesFinish: state.coordinatesFinish,
         setAddressStart,
+        setAddressFinish,
       }}
     >
       {children}

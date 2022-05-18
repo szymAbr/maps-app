@@ -1,14 +1,20 @@
 import { AddressSection } from "../components/styles/AddressSection.styled";
 import AddressForm from "../components/AddressForm";
 import { Button, ButtonContainer } from "./styles/Button.styled";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import axios from "axios";
 
 export default function AddressMain() {
   const params = ["number", "street", "city", "postcode", "country"];
-  const { addressStart } = useContext(GlobalContext);
-  const { setAddressStart } = useContext(GlobalContext);
+  const {
+    addressStart,
+    addressFinish,
+    coordinatesStart,
+    coordinatesFinish,
+    setAddressStart,
+    setAddressFinish,
+  } = useContext(GlobalContext);
   const [start, setStart] = useState({
     number: "",
     street: "",
@@ -23,21 +29,36 @@ export default function AddressMain() {
     postcode: "",
     country: "",
   });
+  const [coordsStart, setCoordsStart] = useState({
+    lon: 0,
+    lng: 0,
+  });
+  const [coordsFinish, setCoordsFinish] = useState({
+    lon: 0,
+    lng: 0,
+  });
 
   function handleClick() {
-    let address = "";
+    let addressStart = "";
+    let addressFinish = "";
 
     for (const prop in start) {
-      address += `+${start[prop]}`;
+      addressStart += `+${start[prop]}`;
+    }
+
+    for (const prop in finish) {
+      addressFinish += `+${finish[prop]}`;
     }
 
     // replace potential spaces with "+"
-    const addressClean = address.replace(" ", "+");
+    const addressStartClean = addressStart.replace(" ", "+");
+    const addressFinishClean = addressFinish.replace(" ", "+");
 
-    geocode(addressClean);
+    geocode("start", addressStartClean);
+    geocode("finish", addressFinishClean);
   }
 
-  function geocode(address) {
+  function geocode(point, address) {
     axios
       .get(
         `https://geocode.search.hereapi.com/v1/geocode?q=${address}&apiKey=${process.env.REACT_APP_API_KEY}`
@@ -45,14 +66,29 @@ export default function AddressMain() {
       .then((response) => {
         const data = response.data;
 
-        console.log(response);
-        console.log(data);
+        if (point === "start") {
+          setCoordsStart({
+            ...data.items[0].position,
+          });
+        } else {
+          setCoordsFinish({
+            ...data.items[0].position,
+          });
+        }
       })
       .catch((error) => {
         const errorMsg = error.message;
         console.log(errorMsg);
       });
   }
+
+  useEffect(() => {
+    console.log("coordsStart modified: ", coordsStart);
+  }, [coordsStart]);
+
+  useEffect(() => {
+    console.log("coordsFinish modified: ", coordsFinish);
+  }, [coordsFinish]);
 
   return (
     <>
