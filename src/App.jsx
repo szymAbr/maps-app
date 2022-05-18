@@ -2,10 +2,11 @@ import { Link, Outlet } from "react-router-dom";
 import GlobalStyles from "./components/styles/Global";
 import { Container } from "./components/styles/Container.styled";
 import { Nav } from "./components/styles/Nav.styled";
+import { GlobalProvider } from "./context/GlobalState";
 
 export default function App() {
   return (
-    <>
+    <GlobalProvider>
       <GlobalStyles />
       <Container>
         <h1>Map App</h1>
@@ -16,6 +17,6 @@ export default function App() {
 
         <Outlet />
       </Container>
-    </>
+    </GlobalProvider>
   );
 }
