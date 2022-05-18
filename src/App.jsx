@@ -1,23 +1,21 @@
-import "./App.css";
 import { Link, Outlet } from "react-router-dom";
-import styled from "styled-components";
-
-const Nav = styled.nav`
-  border-bottom: solid 1px;
-  padding-bottom: 1rem;
-`;
+import GlobalStyles from "./components/styles/Global";
+import { Container } from "./components/styles/Container.styled";
+import { Nav } from "./components/styles/Nav.styled";
 
 export default function App() {
   return (
-    <div>
-      <h1>Map App</h1>
+    <>
+      <GlobalStyles />
+      <Container>
+        <h1>Map App</h1>
 
-      <Nav>
-        <Link to="/address">Address</Link> |{" "}
-        <Link to="/map">Map</Link>
-      </Nav>
+        <Nav>
+          <Link to="/address">Address</Link> | <Link to="/map">Map</Link>
+        </Nav>
 
-      <Outlet />
-    </div>
+        <Outlet />
+      </Container>
+    </>
   );
 }
