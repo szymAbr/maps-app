@@ -9,7 +9,7 @@ import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 
 const StyledMap = styled(MapContainer)`
-  width: 70vw;
+  width: 100vw;
   height: 70vh;
 `;
 
@@ -22,29 +22,29 @@ export default function MapMain() {
 
   useEffect(() => {
     if (summary) {
-      setTotalDistance(summary.totalDistance);
+      setTotalDistance((summary.totalDistance / 1000).toFixed(2));
     }
   }, [summary]);
 
   useEffect(() => {
     if (totalDistance && price) {
-      setTotalCost(totalDistance * price);
+      setTotalCost((totalDistance * price * 1.1).toFixed(2));
     }
   }, [totalDistance, price]);
 
   return (
     <>
-      <MapForm price={price} setPrice={setPrice} />
-
       {totalDistance ? (
         <div>
-          <p>Total distance: {(totalDistance / 1000).toFixed(2)} km</p>
+          <MapForm setPrice={setPrice} />
+
+          <p>Total distance: {totalDistance} km</p>
 
           <p>Total cost: &euro;{totalCost}</p>
         </div>
       ) : null}
 
-      {coordsStart.lat ? (
+      {coordsStart[0] ? (
         <StyledMap
           scrollWheelZoom={true}
           whenReady={(e) => console.log(e.target)}
@@ -55,19 +55,19 @@ export default function MapMain() {
           />
 
           <MapRouting
-            start={[coordsStart.lat, coordsStart.lng]}
-            finish={[coordsFinish.lat, coordsFinish.lng]}
+            start={[coordsStart[0], coordsStart[1]]}
+            finish={[coordsFinish[0], coordsFinish[1]]}
             setSummary={setSummary}
           />
 
           <MapMarker
-            position={[coordsStart.lat, coordsStart.lng]}
+            position={[coordsStart[0], coordsStart[1]]}
             type={"START"}
             address={"address"}
           />
 
           <MapMarker
-            position={[coordsFinish.lat, coordsFinish.lng]}
+            position={[coordsFinish[0], coordsFinish[1]]}
             type={"FINISH"}
             address={"address"}
           />
