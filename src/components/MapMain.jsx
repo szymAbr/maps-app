@@ -1,21 +1,38 @@
+import L from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import MapRouting from "./MapRouting";
 import styled from "styled-components";
 
 const StyledMap = styled(MapContainer)`
-  width: 500px;
-  height: 500px;
+  width: 100vw;
+  height: 100vh;
 `;
 
 export default function MapMain() {
   return (
-    <StyledMap center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+    <StyledMap scrollWheelZoom={true}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={[51.505, -0.09]}>
+
+      <MapRouting />
+
+      <Marker position={[52.41133, 16.93065]}>
         <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
+          <span>START</span>
+          <br />
+          <span>ADDRESS: xxxx</span>
+          <br />
+        </Popup>
+      </Marker>
+
+      <Marker position={[52.21427, 21.02099]}>
+        <Popup>
+          <span>FINISH</span>
+          <br />
+          <span>ADDRESS: xxxx</span>
+          <br />
         </Popup>
       </Marker>
     </StyledMap>
