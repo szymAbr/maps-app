@@ -13,12 +13,12 @@ export default function AppReducer(state, action) {
     case "SET_COORDS_START":
       return {
         ...state,
-        coordsStart: { ...action.payload },
+        coordsStart: action.payload,
       };
     case "SET_COORDS_FINISH":
       return {
         ...state,
-        coordsFinish: { ...action.payload },
+        coordsFinish: action.payload,
       };
     default:
       return state;

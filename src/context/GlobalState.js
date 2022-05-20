@@ -16,14 +16,8 @@ const initialState = {
     postcode: "",
     country: "",
   },
-  coordsStart: {
-    lat: 0,
-    lng: 0,
-  },
-  coordsFinish: {
-    lat: 0,
-    lng: 0,
-  },
+  coordsStart: [0, 0],
+  coordsFinish: [0, 0],
 };
 
 export const GlobalContext = createContext(initialState);
