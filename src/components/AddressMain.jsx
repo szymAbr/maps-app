@@ -2,6 +2,7 @@ import { AddressSection } from "../components/styles/AddressSection.styled";
 import AddressForm from "../components/AddressForm";
 import { Button, ButtonContainer } from "./styles/Button.styled";
 import { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
 import axios from "axios";
 
@@ -23,6 +24,7 @@ export default function AddressMain() {
     postcode: "",
     country: "",
   });
+  const navigate = useNavigate();
 
   async function handleClick() {
     let addressStart = "";
@@ -65,6 +67,9 @@ export default function AddressMain() {
       .catch((error) => {
         const errorMsg = error.message;
         console.log(errorMsg);
+      })
+      .finally(() => {
+        navigate("/map");
       });
   }
 
