@@ -7,14 +7,8 @@ import axios from "axios";
 
 export default function AddressMain() {
   const params = ["number", "street", "city", "postcode", "country"];
-  const {
-    addressStart,
-    addressFinish,
-    coordinatesStart,
-    coordinatesFinish,
-    setAddressStart,
-    setAddressFinish,
-  } = useContext(GlobalContext);
+  const { coordsStart, coordsFinish, setCoordsStart, setCoordsFinish } =
+    useContext(GlobalContext);
   const [start, setStart] = useState({
     number: "",
     street: "",
@@ -29,16 +23,8 @@ export default function AddressMain() {
     postcode: "",
     country: "",
   });
-  const [coordsStart, setCoordsStart] = useState({
-    lon: 0,
-    lng: 0,
-  });
-  const [coordsFinish, setCoordsFinish] = useState({
-    lon: 0,
-    lng: 0,
-  });
 
-  function handleClick() {
+  async function handleClick() {
     let addressStart = "";
     let addressFinish = "";
 
@@ -83,11 +69,11 @@ export default function AddressMain() {
   }
 
   useEffect(() => {
-    console.log("coordsStart modified: ", coordsStart);
+    console.log("state coords start: ", coordsStart);
   }, [coordsStart]);
 
   useEffect(() => {
-    console.log("coordsFinish modified: ", coordsFinish);
+    console.log("state coords finish: ", coordsFinish);
   }, [coordsFinish]);
 
   return (

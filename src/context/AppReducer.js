@@ -10,6 +10,16 @@ export default function AppReducer(state, action) {
         ...state,
         addressFinish: { ...action.payload },
       };
+    case "SET_COORDS_START":
+      return {
+        ...state,
+        coordsStart: { ...action.payload },
+      };
+    case "SET_COORDS_FINISH":
+      return {
+        ...state,
+        coordsFinish: { ...action.payload },
+      };
     default:
       return state;
   }

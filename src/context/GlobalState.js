@@ -16,11 +16,11 @@ const initialState = {
     postcode: "",
     country: "",
   },
-  coordinatesStart: {
+  coordsStart: {
     lat: 0,
     lng: 0,
   },
-  coordinatesFinish: {
+  coordsFinish: {
     lat: 0,
     lng: 0,
   },
@@ -45,15 +45,31 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
+  function setCoordsStart(coords) {
+    dispatch({
+      type: "SET_COORDS_START",
+      payload: coords,
+    });
+  }
+
+  function setCoordsFinish(coords) {
+    dispatch({
+      type: "SET_COORDS_FINISH",
+      payload: coords,
+    });
+  }
+
   return (
     <GlobalContext.Provider
       value={{
         addressStart: state.addressStart,
         addressFinish: state.addressFinish,
-        coordinatesStart: state.coordinatesStart,
-        coordinatesFinish: state.coordinatesFinish,
+        coordsStart: state.coordsStart,
+        coordsFinish: state.coordsFinish,
         setAddressStart,
         setAddressFinish,
+        setCoordsStart,
+        setCoordsFinish,
       }}
     >
       {children}

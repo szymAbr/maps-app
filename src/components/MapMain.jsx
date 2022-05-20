@@ -1,7 +1,9 @@
-import L from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MapRouting from "./MapRouting";
+import MapMarker from "./MapMarker";
+import { GlobalContext } from "../context/GlobalState";
 import styled from "styled-components";
+import { useContext } from "react";
 
 const StyledMap = styled(MapContainer)`
   width: 100vw;
@@ -9,6 +11,8 @@ const StyledMap = styled(MapContainer)`
 `;
 
 export default function MapMain() {
+  const { coordsStart, coordsFinish } = useContext(GlobalContext);
+
   return (
     <StyledMap scrollWheelZoom={true}>
       <TileLayer
