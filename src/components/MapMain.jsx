@@ -14,7 +14,8 @@ const StyledMap = styled(MapContainer)`
 `;
 
 export default function MapMain() {
-  const { coordsStart, coordsFinish } = useContext(GlobalContext);
+  const { coordsStart, coordsFinish, setStartUpdated, setFinishUpdated } =
+    useContext(GlobalContext);
   const [summary, setSummary] = useState(null);
   const [totalDistance, setTotalDistance] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
@@ -23,6 +24,8 @@ export default function MapMain() {
   useEffect(() => {
     if (summary) {
       setTotalDistance((summary.totalDistance / 1000).toFixed(2));
+      setStartUpdated(false);
+      setFinishUpdated(false);
     }
   }, [summary]);
 
@@ -31,6 +34,55 @@ export default function MapMain() {
       setTotalCost((totalDistance * price * 1.1).toFixed(2));
     }
   }, [totalDistance, price]);
+
+  useEffect(() => {
+    async function storage() {
+      const coordsFromStorage = await JSON.parse(
+        localStorage.getItem("coords")
+      );
+
+      if (coordsFromStorage && coordsFromStorage.length > 0) {
+        if (
+          coordsFromStorage.some(
+            (coords) =>
+              coords.coordsStart[0] === coordsStart[0] &&
+              coords.coordsStart[1] === coordsStart[1] &&
+              coords.coordsFinish[0] === coordsFinish[0] &&
+              coords.coordsFinish[1] === coordsFinish[1]
+          )
+        ) {
+          return;
+        } else {
+          if (coordsFromStorage.length <= 9) {
+            localStorage.setItem(
+              "coords",
+              JSON.stringify([
+                ...coordsFromStorage,
+                { coordsStart, coordsFinish },
+              ])
+            );
+          } else {
+            coordsFromStorage.shift();
+
+            localStorage.setItem(
+              "coords",
+              JSON.stringify([
+                ...coordsFromStorage,
+                { coordsStart, coordsFinish },
+              ])
+            );
+          }
+        }
+      } else {
+        localStorage.setItem(
+          "coords",
+          JSON.stringify([{ coordsStart, coordsFinish }])
+        );
+      }
+    }
+
+    storage();
+  }, [coordsStart, coordsFinish]);
 
   return (
     <>
