@@ -5,6 +5,10 @@ export const FlexDiv = styled.div`
   flex-direction: column;
   align-items: center;
 
+  & h2 {
+    text-align: center;
+  }
+
   & ul div {
     padding: 0 2.5rem;
     display: flex;
@@ -14,6 +18,7 @@ export const FlexDiv = styled.div`
 
   & ul {
     margin-top: 1rem;
+    margin-bottom: 3rem;
     padding: 0;
     list-style: none;
   }
