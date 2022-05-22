@@ -93,7 +93,7 @@ export default function MapMain() {
   }, [addressStart, addressEnd, coordsStart, coordsEnd]);
 
   return (
-    <>
+    <div>
       {totalDistance ? (
         <div>
           <MapForm setPrice={setPrice} />
@@ -144,6 +144,6 @@ export default function MapMain() {
           />
         </StyledMap>
       )}
-    </>
+    </div>
   );
 }

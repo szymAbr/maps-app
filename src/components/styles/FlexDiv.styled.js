@@ -5,12 +5,11 @@ export const FlexDiv = styled.div`
   flex-direction: column;
   align-items: center;
 
-  & div {
+  & ul div {
     padding: 0 2.5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    border-bottom: 1px solid black;
   }
 
   & ul {
