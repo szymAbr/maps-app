@@ -40,17 +40,15 @@ export default function MapMain() {
     async function storage() {
       const storedCoords = await JSON.parse(localStorage.getItem("coords"));
 
-      console.log(storedCoords);
+      if (
+        coordsStart[0] === 0 &&
+        coordsStart[1] === 0 &&
+        coordsEnd[0] === 0 &&
+        coordsEnd[1] === 0
+      )
+        return;
 
       if (storedCoords && storedCoords.length > 0) {
-        if (
-          coordsStart[0] === 0 &&
-          coordsStart[1] === 0 &&
-          coordsEnd[0] === 0 &&
-          coordsEnd[1] === 0
-        )
-          return;
-
         if (
           storedCoords.some(
             (coords) =>
