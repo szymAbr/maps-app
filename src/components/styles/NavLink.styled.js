@@ -2,9 +2,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const NavLink = styled(Link)`
-  &:link {
-    text-decoration: none;
-  }
+  text-decoration: none;
+  color: white;
 
   &:visited {
     color: inherit;
