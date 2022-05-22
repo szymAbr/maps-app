@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Nav = styled.nav`
-  padding-bottom: 1rem;
+export const Heading = styled.h1`
   margin: 0 2rem;
+  padding: 1rem 0;
 `;

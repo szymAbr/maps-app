@@ -3,24 +3,24 @@ import GlobalStyles from "./components/styles/Global";
 import { Container } from "./components/styles/Container.styled";
 import { Nav } from "./components/styles/Nav.styled";
 import { GlobalProvider } from "./context/GlobalState";
-import { StyledLink } from "./components/styles/Link.styled";
-import { MainNav } from "./components/styles/MainNav.styled";
+import { NavLink } from "./components/styles/NavLink.styled";
+import { NavMain } from "./components/styles/NavMain.styled";
+import { Heading } from "./components/styles/Heading.styled";
 
 export default function App() {
   return (
     <GlobalProvider>
       <GlobalStyles />
       <Container>
-        <MainNav>
-          <StyledLink to="/">
-            <h1>Map App</h1>
-          </StyledLink>
+        <NavMain>
+          <Heading>Maps App</Heading>
 
           <Nav>
-            <StyledLink to="/address">Address</StyledLink> |{" "}
-            <StyledLink to="/map">Map</StyledLink>
+            <NavLink to="/">Home</NavLink> |{" "}
+            <NavLink to="/address">Address</NavLink> |{" "}
+            <NavLink to="/map">Map</NavLink>
           </Nav>
-        </MainNav>
+        </NavMain>
 
         <Outlet />
       </Container>
