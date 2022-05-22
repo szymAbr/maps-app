@@ -36,7 +36,7 @@ export default function AddressMain() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (startUpdated && endUpdated) navigate("/map");
+    if (startUpdated && endUpdated) navigate("/maps-app/map");
   }, [startUpdated, endUpdated, navigate]);
 
   async function handleClick() {
@@ -60,7 +60,6 @@ export default function AddressMain() {
   }
 
   function geocode(point, address) {
-    // data.items[0].address.street + houseNumber + , + postalCode + city + , + countryName
     axios
       .get(
         `https://geocode.search.hereapi.com/v1/geocode?q=${address}&apiKey=${process.env.REACT_APP_API_KEY}`
