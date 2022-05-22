@@ -1,13 +1,14 @@
 {
   "name": "maps-app",
+  "homepage": "https://szymAbr.github.io/maps-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@here/maps-api-for-javascript": "^1.30.15",
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
+    "gh-pages": "^4.0.0",
     "leaflet": "^1.8.0",
     "leaflet-routing-machine": "^3.2.12",
     "react": "^18.1.0",
@@ -19,6 +20,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -41,5 +44,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/react": "^13.2.0",
+    "react-test-renderer": "^18.1.0"
   }
 }
