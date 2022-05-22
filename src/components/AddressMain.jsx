@@ -8,8 +8,14 @@ import axios from "axios";
 
 export default function AddressMain() {
   const params = ["number", "street", "city", "postcode", "country"];
-  const { coordsStart, coordsFinish, setCoordsStart, setCoordsFinish } =
-    useContext(GlobalContext);
+  const {
+    startUpdated,
+    finishUpdated,
+    setCoordsStart,
+    setCoordsFinish,
+    setStartUpdated,
+    setFinishUpdated,
+  } = useContext(GlobalContext);
   const [start, setStart] = useState({
     number: "",
     street: "",
@@ -24,91 +30,11 @@ export default function AddressMain() {
     postcode: "",
     country: "",
   });
-  const [lastCoordsStart, setLastCoordsStart] = useState([0, 0]);
-  const [lastCoordsFinish, setLastCoordsFinish] = useState([0, 0]);
-  const [savedCoords, setSavedCoords] = useState([
-    {
-      start: [0, 0],
-      finish: [0, 0],
-    },
-  ]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (
-      coordsStart[0] !== lastCoordsStart[0] ||
-      coordsStart[1] !== lastCoordsStart[1]
-    ) {
-      if (
-        coordsFinish[0] !== lastCoordsFinish[0] ||
-        coordsFinish[1] !== lastCoordsFinish[1]
-      ) {
-        setLastCoordsStart(coordsStart);
-        setLastCoordsFinish(coordsFinish);
-
-        async function storage() {
-          const coordsFromStorage = await JSON.parse(
-            localStorage.getItem("coords")
-          );
-
-          if (coordsFromStorage && coordsFromStorage.length > 0) {
-            // setSavedCoords([...savedCoords, coordsFromStorage]);
-
-            console.log("from storage", coordsFromStorage);
-
-            coordsFromStorage.forEach((coords) => {
-              if (
-                coords.coordsStart[0] !== coordsStart[0] &&
-                coords.coordsStart[1] !== coordsStart[1] &&
-                coords.coordsFinish[0] !== coordsFinish[0] &&
-                coords.coordsFinish[1] !== coordsFinish[1]
-              ) {
-                if (coordsFromStorage.length <= 10) {
-                  localStorage.setItem(
-                    "coords",
-                    JSON.stringify([
-                      ...coordsFromStorage,
-                      { coordsStart, coordsFinish },
-                    ])
-                  );
-                } else {
-                  coordsFromStorage.shift();
-
-                  localStorage.setItem(
-                    "coords",
-                    JSON.stringify([
-                      ...coordsFromStorage,
-                      { coordsStart, coordsFinish },
-                    ])
-                  );
-                }
-              }
-            });
-          } else {
-            localStorage.setItem(
-              "coords",
-              JSON.stringify([{ coordsStart, coordsFinish }])
-            );
-          }
-        }
-
-        storage();
-
-        // navigate("/map");
-      }
-    }
-
-    console.log("GEEEEZ", coordsStart, coordsFinish, lastCoordsStart, lastCoordsFinish);
-
-    // if (
-    //   coordsFinish[0] !== lastCoordsFinish[0] ||
-    //   coordsFinish[1] !== lastCoordsFinish[1]
-    // ) {
-    //   setLastCoordsFinish(coordsFinish);
-
-    //   storage();
-    // }
-  }, [coordsStart, coordsFinish, lastCoordsStart, lastCoordsFinish, navigate]);
+    if (startUpdated && finishUpdated) navigate("/map");
+  }, [startUpdated, finishUpdated, navigate]);
 
   async function handleClick() {
     let addressStart = "";
@@ -143,73 +69,22 @@ export default function AddressMain() {
             data.items[0].position.lat,
             data.items[0].position.lng,
           ]);
+
+          setStartUpdated(true);
         } else {
           setCoordsFinish([
             data.items[0].position.lat,
             data.items[0].position.lng,
           ]);
+
+          setFinishUpdated(true);
         }
       })
       .catch((error) => {
         const errorMsg = error.message;
         console.log(errorMsg);
       });
-    // .finally(() => {
-
-    // });
   }
-
-  // async function storage() {
-  //   const coordsFromStorage = await JSON.parse(localStorage.getItem("coords"));
-
-  //   if (coordsFromStorage && coordsFromStorage.length > 0) {
-  //     // setSavedCoords([...savedCoords, coordsFromStorage]);
-
-  //     console.log("from storage", coordsFromStorage);
-
-  //     coordsFromStorage.forEach((coords) => {
-  //       if (
-  //         coords.coordsStart[0] !== coordsStart[0] &&
-  //         coords.coordsStart[1] !== coordsStart[1] &&
-  //         coords.coordsFinish[0] !== coordsFinish[0] &&
-  //         coords.coordsFinish[1] !== coordsFinish[1]
-  //       ) {
-  //         if (coordsFromStorage.length <= 10) {
-  //           localStorage.setItem(
-  //             "coords",
-  //             JSON.stringify([
-  //               ...coordsFromStorage,
-  //               { coordsStart, coordsFinish },
-  //             ])
-  //           );
-  //         } else {
-  //           coordsFromStorage.shift();
-
-  //           localStorage.setItem(
-  //             "coords",
-  //             JSON.stringify([
-  //               ...coordsFromStorage,
-  //               { coordsStart, coordsFinish },
-  //             ])
-  //           );
-  //         }
-  //       }
-  //     });
-  //   } else {
-  //     localStorage.setItem(
-  //       "coords",
-  //       JSON.stringify([{ coordsStart, coordsFinish }])
-  //     );
-  //   }
-  // }
-
-  useEffect(() => {
-    console.log("state coords start: ", coordsStart);
-  }, [coordsStart]);
-
-  useEffect(() => {
-    console.log("state coords finish: ", coordsFinish);
-  }, [coordsFinish]);
 
   return (
     <>
