@@ -18,6 +18,8 @@ const initialState = {
   },
   coordsStart: [0, 0],
   coordsFinish: [0, 0],
+  startUpdated: false,
+  finishUpdated: false
 };
 
 export const GlobalContext = createContext(initialState);
@@ -53,6 +55,20 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
+  function setStartUpdated(boolean) {
+    dispatch({
+      type: "SET_START_UPDATED",
+      payload: boolean,
+    });
+  }
+
+  function setFinishUpdated(boolean) {
+    dispatch({
+      type: "SET_FINISH_UPDATED",
+      payload: boolean,
+    });
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -60,10 +76,14 @@ export const GlobalProvider = ({ children }) => {
         addressFinish: state.addressFinish,
         coordsStart: state.coordsStart,
         coordsFinish: state.coordsFinish,
+        startUpdated: state.startUpdated,
+        finishUpdated: state.finishUpdated,
         setAddressStart,
         setAddressFinish,
         setCoordsStart,
         setCoordsFinish,
+        setStartUpdated,
+        setFinishUpdated,
       }}
     >
       {children}
