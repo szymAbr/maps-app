@@ -3,12 +3,12 @@ export default function AppReducer(state, action) {
     case "SET_ADDRESS_START":
       return {
         ...state,
-        addressStart: { ...action.payload },
+        addressStart: action.payload,
       };
     case "SET_ADDRESS_FINISH":
       return {
         ...state,
-        addressFinish: { ...action.payload },
+        addressFinish: action.payload,
       };
     case "SET_COORDS_START":
       return {

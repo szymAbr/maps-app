@@ -2,24 +2,12 @@ import React, { createContext, useReducer } from "react";
 import AppReducer from "./AppReducer";
 
 const initialState = {
-  addressStart: {
-    number: "",
-    street: "",
-    city: "",
-    postcode: "",
-    country: "",
-  },
-  addressFinish: {
-    number: "",
-    street: "",
-    city: "",
-    postcode: "",
-    country: "",
-  },
+  addressStart: "",
+  addressFinish: "",
   coordsStart: [0, 0],
   coordsFinish: [0, 0],
   startUpdated: false,
-  finishUpdated: false
+  finishUpdated: false,
 };
 
 export const GlobalContext = createContext(initialState);

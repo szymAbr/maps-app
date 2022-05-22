@@ -12,6 +12,8 @@ export default function AddressMain() {
   const {
     startUpdated,
     finishUpdated,
+    setAddressStart,
+    setAddressFinish,
     setCoordsStart,
     setCoordsFinish,
     setStartUpdated,
@@ -58,12 +60,22 @@ export default function AddressMain() {
   }
 
   function geocode(point, address) {
+    // data.items[0].address.street + houseNumber + , + postalCode + city + , + countryName
     axios
       .get(
         `https://geocode.search.hereapi.com/v1/geocode?q=${address}&apiKey=${process.env.REACT_APP_API_KEY}`
       )
       .then((response) => {
         const data = response.data;
+        const { street, houseNumber, postalCode, city, countryName } =
+          data.items[0].address;
+        let fullAddress = `${postalCode} ${city}, ${countryName}`;
+
+        if (street && houseNumber) {
+          fullAddress = `${street} ${houseNumber}, ` + fullAddress;
+        } else if (street) {
+          fullAddress = `${street}, ` + fullAddress;
+        }
 
         if (point === "start") {
           setCoordsStart([
@@ -71,12 +83,16 @@ export default function AddressMain() {
             data.items[0].position.lng,
           ]);
 
+          setAddressStart(fullAddress);
+
           setStartUpdated(true);
         } else {
           setCoordsFinish([
             data.items[0].position.lat,
             data.items[0].position.lng,
           ]);
+
+          setAddressFinish(fullAddress);
 
           setFinishUpdated(true);
         }

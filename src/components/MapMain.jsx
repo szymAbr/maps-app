@@ -9,16 +9,12 @@ import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 
 export default function MapMain() {
-  const { coordsStart, coordsFinish, setStartUpdated, setFinishUpdated } =
+  const { addressStart, addressFinish, coordsStart, coordsFinish, setStartUpdated, setFinishUpdated } =
     useContext(GlobalContext);
   const [summary, setSummary] = useState(null);
   const [totalDistance, setTotalDistance] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [price, setPrice] = useState(0);
-
-  useEffect(() => {
-    console.log(document.getElementsByClassName("sc-bjUoiL fpBEpu"));
-  });
 
   useEffect(() => {
     if (summary) {
@@ -36,52 +32,61 @@ export default function MapMain() {
 
   useEffect(() => {
     async function storage() {
-      const coordsFromStorage = await JSON.parse(
-        localStorage.getItem("coords")
-      );
+      const storedCoords = await JSON.parse(localStorage.getItem("coords"));
 
-      if (coordsFromStorage && coordsFromStorage.length > 0) {
+      console.log(storedCoords);
+
+      if (storedCoords && storedCoords.length > 0) {
         if (
-          coordsFromStorage.some(
+          coordsStart[0] === 0 &&
+          coordsStart[1] === 0 &&
+          coordsFinish[0] === 0 &&
+          coordsFinish[1] === 0
+        )
+          return;
+
+        if (
+          storedCoords.some(
             (coords) =>
               coords.coordsStart[0] === coordsStart[0] &&
               coords.coordsStart[1] === coordsStart[1] &&
               coords.coordsFinish[0] === coordsFinish[0] &&
               coords.coordsFinish[1] === coordsFinish[1]
           )
-        ) {
+        )
           return;
-        } else {
-          if (coordsFromStorage.length <= 9) {
-            localStorage.setItem(
-              "coords",
-              JSON.stringify([
-                ...coordsFromStorage,
-                { coordsStart, coordsFinish },
-              ])
-            );
-          } else {
-            coordsFromStorage.shift();
 
-            localStorage.setItem(
-              "coords",
-              JSON.stringify([
-                ...coordsFromStorage,
-                { coordsStart, coordsFinish },
-              ])
-            );
-          }
+        if (storedCoords.length <= 9) {
+          localStorage.setItem(
+            "coords",
+            JSON.stringify([
+              ...storedCoords,
+              { coordsStart, coordsFinish, addressStart, addressFinish },
+            ])
+          );
+        } else {
+          storedCoords.shift();
+
+          localStorage.setItem(
+            "coords",
+            JSON.stringify([
+              ...storedCoords,
+              { coordsStart, coordsFinish, addressStart, addressFinish },
+            ])
+          );
         }
       } else {
         localStorage.setItem(
           "coords",
-          JSON.stringify([{ coordsStart, coordsFinish }])
+          JSON.stringify([
+            { coordsStart, coordsFinish, addressStart, addressFinish },
+          ])
         );
       }
     }
 
     storage();
-  }, [coordsStart, coordsFinish]);
+  }, [addressStart, addressFinish, coordsStart, coordsFinish]);
 
   return (
     <>
