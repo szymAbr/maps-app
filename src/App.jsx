@@ -19,13 +19,13 @@ export default function App() {
           <Heading>Maps App</Heading>
 
           <Nav>
-            <NavLink to="/">Home</NavLink> |{" "}
-            <NavLink to="/address">Address</NavLink> |{" "}
-            <NavLink to="/map">Map</NavLink>
+            <NavLink to="/maps-app">Home</NavLink> |{" "}
+            <NavLink to="/maps-app/address">Address</NavLink> |{" "}
+            <NavLink to="/maps-app/map">Map</NavLink>
           </Nav>
         </NavMain>
 
-        {location.pathname === "/" ? <SearchHistory /> : null}
+        {location.pathname === "/maps-app" ? <SearchHistory /> : null}
 
         <Outlet />
       </Container>

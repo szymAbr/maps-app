@@ -16,10 +16,10 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />}>
-          <Route path="address" element={<Address />} />
+        <Route path="/maps-app" element={<App />}>
+          <Route path="/maps-app/address" element={<Address />} />
 
-          <Route path="map" element={<Map />} />
+          <Route path="/maps-app/map" element={<Map />} />
 
           <Route
             path="*"
