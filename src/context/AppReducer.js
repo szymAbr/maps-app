@@ -8,7 +8,7 @@ export default function AppReducer(state, action) {
     case "SET_ADDRESS_FINISH":
       return {
         ...state,
-        addressFinish: action.payload,
+        addressEnd: action.payload,
       };
     case "SET_COORDS_START":
       return {
@@ -18,7 +18,7 @@ export default function AppReducer(state, action) {
     case "SET_COORDS_FINISH":
       return {
         ...state,
-        coordsFinish: action.payload,
+        coordsEnd: action.payload,
       };
     case "SET_START_UPDATED":
       return {
@@ -28,7 +28,7 @@ export default function AppReducer(state, action) {
     case "SET_FINISH_UPDATED":
       return {
         ...state,
-        finishUpdated: action.payload,
+        endUpdated: action.payload,
       };
     default:
       return state;

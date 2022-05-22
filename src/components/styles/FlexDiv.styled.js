@@ -5,6 +5,14 @@ export const FlexDiv = styled.div`
   flex-direction: column;
   align-items: center;
 
+  & div {
+    padding: 0 2.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+  }
+
   & ul {
     margin-top: 1rem;
     padding: 0;
@@ -15,6 +23,7 @@ export const FlexDiv = styled.div`
     padding: 0.5rem;
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid black;
   }
 
   & ul li span {

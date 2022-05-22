@@ -9,8 +9,14 @@ import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 
 export default function MapMain() {
-  const { addressStart, addressFinish, coordsStart, coordsFinish, setStartUpdated, setFinishUpdated } =
-    useContext(GlobalContext);
+  const {
+    addressStart,
+    addressEnd,
+    coordsStart,
+    coordsEnd,
+    setStartUpdated,
+    setEndUpdated,
+  } = useContext(GlobalContext);
   const [summary, setSummary] = useState(null);
   const [totalDistance, setTotalDistance] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
@@ -20,7 +26,7 @@ export default function MapMain() {
     if (summary) {
       setTotalDistance((summary.totalDistance / 1000).toFixed(2));
       setStartUpdated(false);
-      setFinishUpdated(false);
+      setEndUpdated(false);
     }
   }, [summary]);
 
@@ -40,8 +46,8 @@ export default function MapMain() {
         if (
           coordsStart[0] === 0 &&
           coordsStart[1] === 0 &&
-          coordsFinish[0] === 0 &&
-          coordsFinish[1] === 0
+          coordsEnd[0] === 0 &&
+          coordsEnd[1] === 0
         )
           return;
 
@@ -50,8 +56,8 @@ export default function MapMain() {
             (coords) =>
               coords.coordsStart[0] === coordsStart[0] &&
               coords.coordsStart[1] === coordsStart[1] &&
-              coords.coordsFinish[0] === coordsFinish[0] &&
-              coords.coordsFinish[1] === coordsFinish[1]
+              coords.coordsEnd[0] === coordsEnd[0] &&
+              coords.coordsEnd[1] === coordsEnd[1]
           )
         )
           return;
@@ -61,7 +67,7 @@ export default function MapMain() {
             "coords",
             JSON.stringify([
               ...storedCoords,
-              { coordsStart, coordsFinish, addressStart, addressFinish },
+              { coordsStart, coordsEnd, addressStart, addressEnd },
             ])
           );
         } else {
@@ -71,22 +77,20 @@ export default function MapMain() {
             "coords",
             JSON.stringify([
               ...storedCoords,
-              { coordsStart, coordsFinish, addressStart, addressFinish },
+              { coordsStart, coordsEnd, addressStart, addressEnd },
             ])
           );
         }
       } else {
         localStorage.setItem(
           "coords",
-          JSON.stringify([
-            { coordsStart, coordsFinish, addressStart, addressFinish },
-          ])
+          JSON.stringify([{ coordsStart, coordsEnd, addressStart, addressEnd }])
         );
       }
     }
 
     storage();
-  }, [addressStart, addressFinish, coordsStart, coordsFinish]);
+  }, [addressStart, addressEnd, coordsStart, coordsEnd]);
 
   return (
     <>
@@ -112,7 +116,7 @@ export default function MapMain() {
 
           <MapRouting
             start={[coordsStart[0], coordsStart[1]]}
-            finish={[coordsFinish[0], coordsFinish[1]]}
+            end={[coordsEnd[0], coordsEnd[1]]}
             setSummary={setSummary}
           />
 
@@ -123,7 +127,7 @@ export default function MapMain() {
           />
 
           <MapMarker
-            position={[coordsFinish[0], coordsFinish[1]]}
+            position={[coordsEnd[0], coordsEnd[1]]}
             type={"FINISH"}
             address={"address"}
           />

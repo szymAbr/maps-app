@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "../context/GlobalState";
+import { useEffect, useState } from "react";
 import { FlexDiv } from "./styles/FlexDiv.styled";
 
 export default function SearchHistory() {
@@ -15,19 +14,25 @@ export default function SearchHistory() {
     }
 
     getHistory();
-  });
+  }, []);
 
   return (
     <>
       {history.length ? (
         <FlexDiv>
-          <h3>Your search history:</h3>
+          <h2>Your search history:</h2>
 
           <ul>
+            <div>
+              <h4>START</h4>
+
+              <h4>END</h4>
+            </div>
+
             {history.map(
-              ({ coordsStart, coordsFinish, addressStart, addressFinish }) => (
-                <li key={coordsStart + coordsFinish}>
-                  <span>{addressStart}</span> <span>{addressFinish}</span>
+              ({ coordsStart, coordsEnd, addressStart, addressEnd }) => (
+                <li key={coordsStart + coordsEnd}>
+                  <span>{addressStart}</span> <span>{addressEnd}</span>
                 </li>
               )
             )}
@@ -35,9 +40,9 @@ export default function SearchHistory() {
         </FlexDiv>
       ) : (
         <FlexDiv>
-          <h3>
+          <h2>
             Start finding routes! Your search history will be shown below.
-          </h3>
+          </h2>
         </FlexDiv>
       )}
     </>

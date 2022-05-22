@@ -5,8 +5,8 @@ export default function AddressForm({
   params,
   start,
   setStart,
-  finish,
-  setFinish,
+  end,
+  setEnd,
 }) {
   return (
     <>
@@ -21,7 +21,7 @@ export default function AddressForm({
             onInput={(event) =>
               heading === "Start"
                 ? setStart({ ...start, [param]: event.target.value.trim() })
-                : setFinish({ ...finish, [param]: event.target.value.trim() })
+                : setEnd({ ...end, [param]: event.target.value.trim() })
             }
           />
         ))}

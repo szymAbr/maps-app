@@ -3,11 +3,11 @@ import AppReducer from "./AppReducer";
 
 const initialState = {
   addressStart: "",
-  addressFinish: "",
+  addressEnd: "",
   coordsStart: [0, 0],
-  coordsFinish: [0, 0],
+  coordsEnd: [0, 0],
   startUpdated: false,
-  finishUpdated: false,
+  endUpdated: false,
 };
 
 export const GlobalContext = createContext(initialState);
@@ -22,7 +22,7 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
-  function setAddressFinish(address) {
+  function setAddressEnd(address) {
     dispatch({
       type: "SET_ADDRESS_FINISH",
       payload: address,
@@ -36,7 +36,7 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
-  function setCoordsFinish(coords) {
+  function setCoordsEnd(coords) {
     dispatch({
       type: "SET_COORDS_FINISH",
       payload: coords,
@@ -50,7 +50,7 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
-  function setFinishUpdated(boolean) {
+  function setEndUpdated(boolean) {
     dispatch({
       type: "SET_FINISH_UPDATED",
       payload: boolean,
@@ -61,17 +61,17 @@ export const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         addressStart: state.addressStart,
-        addressFinish: state.addressFinish,
+        addressEnd: state.addressEnd,
         coordsStart: state.coordsStart,
-        coordsFinish: state.coordsFinish,
+        coordsEnd: state.coordsEnd,
         startUpdated: state.startUpdated,
-        finishUpdated: state.finishUpdated,
+        endUpdated: state.endUpdated,
         setAddressStart,
-        setAddressFinish,
+        setAddressEnd,
         setCoordsStart,
-        setCoordsFinish,
+        setCoordsEnd,
         setStartUpdated,
-        setFinishUpdated,
+        setEndUpdated,
       }}
     >
       {children}

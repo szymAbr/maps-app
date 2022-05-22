@@ -11,13 +11,13 @@ export default function AddressMain() {
   const params = ["number", "street", "city", "postcode", "country"];
   const {
     startUpdated,
-    finishUpdated,
+    endUpdated,
     setAddressStart,
-    setAddressFinish,
+    setAddressEnd,
     setCoordsStart,
-    setCoordsFinish,
+    setCoordsEnd,
     setStartUpdated,
-    setFinishUpdated,
+    setEndUpdated,
   } = useContext(GlobalContext);
   const [start, setStart] = useState({
     number: "",
@@ -26,7 +26,7 @@ export default function AddressMain() {
     postcode: "",
     country: "",
   });
-  const [finish, setFinish] = useState({
+  const [end, setEnd] = useState({
     number: "",
     street: "",
     city: "",
@@ -36,27 +36,27 @@ export default function AddressMain() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (startUpdated && finishUpdated) navigate("/map");
-  }, [startUpdated, finishUpdated, navigate]);
+    if (startUpdated && endUpdated) navigate("/map");
+  }, [startUpdated, endUpdated, navigate]);
 
   async function handleClick() {
     let addressStart = "";
-    let addressFinish = "";
+    let addressEnd = "";
 
     for (const prop in start) {
       addressStart += `+${start[prop]}`;
     }
 
-    for (const prop in finish) {
-      addressFinish += `+${finish[prop]}`;
+    for (const prop in end) {
+      addressEnd += `+${end[prop]}`;
     }
 
     // replace potential spaces with "+"
     const addressStartClean = addressStart.replace(" ", "+");
-    const addressFinishClean = addressFinish.replace(" ", "+");
+    const addressEndClean = addressEnd.replace(" ", "+");
 
     geocode("start", addressStartClean);
-    geocode("finish", addressFinishClean);
+    geocode("end", addressEndClean);
   }
 
   function geocode(point, address) {
@@ -87,14 +87,14 @@ export default function AddressMain() {
 
           setStartUpdated(true);
         } else {
-          setCoordsFinish([
+          setCoordsEnd([
             data.items[0].position.lat,
             data.items[0].position.lng,
           ]);
 
-          setAddressFinish(fullAddress);
+          setAddressEnd(fullAddress);
 
-          setFinishUpdated(true);
+          setEndUpdated(true);
         }
       })
       .catch((error) => {
@@ -115,12 +115,7 @@ export default function AddressMain() {
           setStart={setStart}
         />
 
-        <AddressForm
-          heading="Finish"
-          params={params}
-          finish={finish}
-          setFinish={setFinish}
-        />
+        <AddressForm heading="End" params={params} end={end} setEnd={setEnd} />
       </AddressSection>
 
       <ButtonContainer>
