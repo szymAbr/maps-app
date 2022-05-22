@@ -1,6 +1,7 @@
 import { AddressSection } from "../components/styles/AddressSection.styled";
 import AddressForm from "../components/AddressForm";
 import { Button, ButtonContainer } from "./styles/Button.styled";
+import { FlexDiv } from "../components/styles/FlexDiv.styled";
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
@@ -87,7 +88,7 @@ export default function AddressMain() {
   }
 
   return (
-    <>
+    <FlexDiv>
       <h2>Select route</h2>
 
       <AddressSection>
@@ -109,6 +110,6 @@ export default function AddressMain() {
       <ButtonContainer>
         <Button onClick={handleClick}>Find route</Button>
       </ButtonContainer>
-    </>
+    </FlexDiv>
   );
 }

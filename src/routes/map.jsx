@@ -1,14 +1,8 @@
 import { useContext } from "react";
-import styled from "styled-components";
+import { FlexDiv } from "../components/styles/FlexDiv.styled";
 import { GlobalContext } from "../context/GlobalState";
 import axios from "axios";
 import MapMain from "../components/MapMain";
-
-const FlexDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
 
 export default function Map() {
   return (

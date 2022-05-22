@@ -1,17 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+import { TileLayer } from "react-leaflet";
 import { GlobalContext } from "../context/GlobalState";
 import MapRouting from "./MapRouting";
 import MapMarker from "./MapMarker";
 import MapForm from "./MapForm";
-import styled from "styled-components";
+import { StyledMap } from "./styles/MapMain.styled";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
-
-const StyledMap = styled(MapContainer)`
-  width: 100vw;
-  height: 70vh;
-`;
 
 export default function MapMain() {
   const { coordsStart, coordsFinish, setStartUpdated, setFinishUpdated } =
@@ -20,6 +15,10 @@ export default function MapMain() {
   const [totalDistance, setTotalDistance] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [price, setPrice] = useState(0);
+
+  useEffect(() => {
+    console.log(document.getElementsByClassName("sc-bjUoiL fpBEpu"));
+  });
 
   useEffect(() => {
     if (summary) {
