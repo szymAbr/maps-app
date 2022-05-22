@@ -25,7 +25,10 @@ export default function App() {
           </Nav>
         </NavMain>
 
-        {location.pathname === "/maps-app" ? <SearchHistory /> : null}
+        {location.pathname === "/maps-app" ||
+        location.pathname === "/maps-app/" ? (
+          <SearchHistory />
+        ) : null}
 
         <Outlet />
       </Container>
