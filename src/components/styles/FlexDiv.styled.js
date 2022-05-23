@@ -5,6 +5,10 @@ export const FlexDiv = styled.div`
   flex-direction: column;
   align-items: center;
 
+  & p {
+    text-align: center;
+  }
+
   & h2 {
     text-align: center;
   }
