@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { TileLayer } from "react-leaflet";
 import { GlobalContext } from "../context/GlobalState";
 import MapRouting from "./MapRouting";
@@ -7,6 +7,10 @@ import MapForm from "./MapForm";
 import { StyledMap } from "./styles/MapMain.styled";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
+import { BsArrowRight } from "react-icons/bs";
+import { FlexDiv } from "./styles/FlexDiv.styled";
 
 export default function MapMain() {
   const {
@@ -21,6 +25,7 @@ export default function MapMain() {
   const [totalDistance, setTotalDistance] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [price, setPrice] = useState(0);
+  const printRef = useRef(null);
 
   useEffect(() => {
     if (summary) {
@@ -90,16 +95,32 @@ export default function MapMain() {
     storage();
   }, [addressStart, addressEnd, coordsStart, coordsEnd]);
 
+  function printDocument() {
+    html2canvas(printRef.current).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("l", "px", [612, 792]);
+      pdf.addImage(imgData, "JPEG", 0, 0);
+      pdf.save("download.pdf");
+    });
+  }
+
   return (
     <div>
       {totalDistance ? (
-        <div>
+        <FlexDiv ref={printRef}>
+          <p>
+            <span>{addressStart}</span> <BsArrowRight />{" "}
+            <span>{addressEnd}</span>
+          </p>
+
           <MapForm setPrice={setPrice} />
 
           <p>Total distance: {totalDistance} km</p>
 
           <p>Total cost: &euro;{totalCost}</p>
-        </div>
+
+          <button onClick={printDocument}>Download as PDF</button>
+        </FlexDiv>
       ) : null}
 
       {coordsStart[0] ? (
