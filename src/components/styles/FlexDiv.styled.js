@@ -38,4 +38,9 @@ export const FlexDiv = styled.div`
   & ul li span:nth-child(2) {
     text-align: right;
   }
+
+  & button,
+  & input {
+    margin-top: 1.5rem;
+  }
 `;
