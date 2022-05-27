@@ -1,14 +1,14 @@
-import { AddressSection } from "../components/styles/AddressSection.styled";
-import AddressForm from "../components/AddressForm";
-import { Button, ButtonContainer } from "./styles/Button.styled";
-import { FlexDiv } from "../components/styles/FlexDiv.styled";
 import { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import AddressFormElement from "../components/AddressFormElement";
+import { Form } from "./styles/AddressForm.styled";
+import { FlexForm } from "./styles/FlexForm.styled";
+import { Button } from "./styles/Button.styled";
+import { FlexDiv } from "../components/styles/FlexDiv.styled";
 
 export default function AddressMain() {
-  const params = ["number", "street", "city", "postcode", "country"];
   const {
     startUpdated,
     endUpdated,
@@ -19,44 +19,23 @@ export default function AddressMain() {
     setStartUpdated,
     setEndUpdated,
   } = useContext(GlobalContext);
-  const [start, setStart] = useState({
-    number: "",
-    street: "",
-    city: "",
-    postcode: "",
-    country: "",
-  });
-  const [end, setEnd] = useState({
-    number: "",
-    street: "",
-    city: "",
-    postcode: "",
-    country: "",
-  });
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     if (startUpdated && endUpdated) navigate("/maps-app/map");
   }, [startUpdated, endUpdated, navigate]);
 
-  async function handleClick() {
-    let addressStart = "";
-    let addressEnd = "";
+  function handleClick(e) {
+    e.preventDefault();
 
-    for (const prop in start) {
-      addressStart += `+${start[prop]}`;
-    }
+    // replace spaces with "+"
+    let addressStart = start.replace(/[ ]{1,}/g, "+");
+    let addressEnd = end.replace(/[ ]{1,}/g, "+");
 
-    for (const prop in end) {
-      addressEnd += `+${end[prop]}`;
-    }
-
-    // replace potential spaces with "+"
-    const addressStartClean = addressStart.replace(" ", "+");
-    const addressEndClean = addressEnd.replace(" ", "+");
-
-    geocode("start", addressStartClean);
-    geocode("end", addressEndClean);
+    geocode("start", addressStart);
+    geocode("end", addressEnd);
   }
 
   function geocode(point, address) {
@@ -68,12 +47,12 @@ export default function AddressMain() {
         const data = response.data;
         const { street, houseNumber, postalCode, city, countryName } =
           data.items[0].address;
-        let fullAddress = `${postalCode} ${city}, ${countryName}`;
+        let fullAddress = `${postalCode} ${city}, ${countryName}`; // ternary operator?
 
         if (street && houseNumber) {
-          fullAddress = `${street} ${houseNumber}, ` + fullAddress;
+          fullAddress = `${street} ${houseNumber}, ${fullAddress}`;
         } else if (street) {
-          fullAddress = `${street}, ` + fullAddress;
+          fullAddress = `${street}, ${fullAddress}`;
         }
 
         if (point === "start") {
@@ -106,20 +85,19 @@ export default function AddressMain() {
     <FlexDiv>
       <h2>Select route</h2>
 
-      <AddressSection>
-        <AddressForm
-          heading="Start"
-          params={params}
-          start={start}
-          setStart={setStart}
-        />
+      <Form>
+        <FlexForm>
+          <AddressFormElement
+            heading="Start"
+            start={start}
+            setStart={setStart}
+          />
 
-        <AddressForm heading="End" params={params} end={end} setEnd={setEnd} />
-      </AddressSection>
+          <AddressFormElement heading="End" end={end} setEnd={setEnd} />
+        </FlexForm>
 
-      <ButtonContainer>
-        <Button onClick={handleClick}>Find route</Button>
-      </ButtonContainer>
+        <Button onClick={(e) => handleClick(e)}>Find route</Button>
+      </Form>
     </FlexDiv>
   );
 }
