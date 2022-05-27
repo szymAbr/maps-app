@@ -11,6 +11,7 @@ import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { BsArrowRight } from "react-icons/bs";
 import { FlexDiv } from "./styles/FlexDiv.styled";
+import { FlexMap } from "./styles/FlexMap.styled";
 
 export default function MapMain() {
   const {
@@ -124,33 +125,35 @@ export default function MapMain() {
       ) : null}
 
       {coordsStart[0] ? (
-        <StyledMap
-          scrollWheelZoom={true}
-          whenReady={(e) => console.log(e.target)}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
+        <FlexMap>
+          <StyledMap
+            scrollWheelZoom={true}
+            whenReady={(e) => console.log(e.target)}
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
 
-          <MapRouting
-            start={[coordsStart[0], coordsStart[1]]}
-            end={[coordsEnd[0], coordsEnd[1]]}
-            setSummary={setSummary}
-          />
+            <MapRouting
+              start={[coordsStart[0], coordsStart[1]]}
+              end={[coordsEnd[0], coordsEnd[1]]}
+              setSummary={setSummary}
+            />
 
-          <MapMarker
-            position={[coordsStart[0], coordsStart[1]]}
-            type={"START"}
-            address={"address"}
-          />
+            <MapMarker
+              position={[coordsStart[0], coordsStart[1]]}
+              type={"START"}
+              address={"address"}
+            />
 
-          <MapMarker
-            position={[coordsEnd[0], coordsEnd[1]]}
-            type={"FINISH"}
-            address={"address"}
-          />
-        </StyledMap>
+            <MapMarker
+              position={[coordsEnd[0], coordsEnd[1]]}
+              type={"FINISH"}
+              address={"address"}
+            />
+          </StyledMap>
+        </FlexMap>
       ) : (
         <StyledMap
           center={[49.925006, 15.52532]}
