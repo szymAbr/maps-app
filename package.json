@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
+    "axios-mock-adapter": "^1.20.0",
     "gh-pages": "^4.0.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
