@@ -43,8 +43,7 @@ export const FlexDiv = styled.div`
     text-align: right;
   }
 
-  & button,
-  & input {
-    margin-top: 1.5rem;
+  & button {
+    margin: 1.5rem 0;
   }
 `;

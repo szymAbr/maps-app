@@ -4,5 +4,5 @@ import styled from "styled-components";
 export const StyledMap = styled(MapContainer)`
   width: 90vw;
   height: 70vh;
-  margin-top: 2rem;
+  margin: 2rem 0;
 `;
